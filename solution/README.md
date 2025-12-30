@@ -1,6 +1,6 @@
 # How to Solve the Challenge?
 
-# Note:
+> Note:
 Using Burp Suite and its extensions will make solving this challenge easier.
 
 ### Recon
@@ -42,7 +42,7 @@ postId=2&name=attacker&transmission=iamgroot
 
 0
 
-### Note:
+> Note:
 The solution may vary (not conceptually, but technically):
 - The value of the Transfer-Encoding header may be different such as "asdchunked" or "1chunked" or any variation as long as it contains the word chunked.
 - The chunk length varies according to the content of the smuggled request.
