@@ -22,7 +22,7 @@ This challenge is based on **HTTP request smuggling**, which is a technique for 
 
 In the challenge participants interact with a web application that appears to enforce strict routing and access controls, yet hides a protected endpoint that cannot be accessed through straightforward means such as a regular POST request.
 
-The core idea is to expose participants to **request desynchronization / request smuggling** flaws, where HTTP messages are interpreted differently depending on which component (FE/BE) processes them. By carefully crafting requests that exploit ambiguities in request boundaries (HTTP headers namely *Transfer-Encoding* and *Content-Length), participants can cause the backend to process unintended input.
+The core idea is to expose participants to **request desynchronization / request smuggling** flaws, where HTTP messages are interpreted differently depending on which component (FE/BE) processes them. By carefully crafting requests that exploit ambiguities in request boundaries (HTTP headers namely *Transfer-Encoding* and *Content-Length*), participants can cause the backend to process unintended input.
 
 ### Educational goals
 
