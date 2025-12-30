@@ -1,6 +1,6 @@
 # @HACK 2026: Chunk You Very Much
 
-> A deliberately vulnerable web challenge that explores HTTP parsing mismatches and trust boundaries between frontend and backend servers. Thisc challenge depends on HTTP request smuggling.
+> A deliberately vulnerable web challenge that explores HTTP parsing mismatches and trust boundaries between frontend and backend servers. This challenge depends on HTTP request smuggling.
 
 ## Challenge Type
 
