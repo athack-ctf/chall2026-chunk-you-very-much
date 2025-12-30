@@ -1,0 +1,4 @@
+# FLAGS
+
+- `ATHACKCTF{I_t0Ld_Y0U_n0t_T0_TrUsT_tH3_pR0xy}`
+
