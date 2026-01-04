@@ -97,7 +97,7 @@ def post_comment():
         transmission = (params.get("transmission", [""])[0] or "").strip()
 
     COMMENTS.append({"post_id": post_id, "author": name, "text": transmission})
-    COMMENTS.append({"post_id": post_id, "author": "Groot", "text": "You smuggled a request! Here is your reward: " + VICTIM_SESSION})
+    COMMENTS.append({"post_id": post_id, "author": "Groot", "text": "You smuggled a request! Here is your reward: session=" + VICTIM_SESSION})
     return redirect("/post/2", code=302)
 
 
