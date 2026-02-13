@@ -71,7 +71,5 @@ experimentation.
 > does not apply during the early stages of challenge development, so do not hesitate to start building your online
 > challenge if you are unfamiliar with containerization. We (Anis and Hugo) will take care of it.
 
-- **[source/gunicorn/Dockerfile](source/Dockerfile)**: Needed for building a containerized image of the backend server.
-- **[source/mitmproxy/Dockerfile](source/Dockerfile)**: Needed for building a containerized image of the frontend server.
-- **[source/docker-compose.yml](source/docker-compose.yml)**: Needed for a configuration-free run of the online
+- **[source/Dockerfile](source/Dockerfile)**
   challenge.

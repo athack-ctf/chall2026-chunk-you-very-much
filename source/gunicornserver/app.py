@@ -1,4 +1,3 @@
-from curses import raw
 from flask import Flask, request, redirect, Response
 from pathlib import Path
 from html import escape as html_escape

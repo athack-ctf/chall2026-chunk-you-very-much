@@ -3,5 +3,8 @@
 Navigate to source:
 > cd ./source
 
-Run using docker compose:
-> docker compose up --build
+Build the docker image
+> docker build -t chunk-you-very-much .
+
+Run the challenge
+> docker run --rm -p 8002:8002 chunk-you-very-much

