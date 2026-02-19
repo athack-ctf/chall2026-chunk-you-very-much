@@ -15,7 +15,7 @@ COMMENTS = [{"post_id": 2, "author": "Groot", "text": "If you can read this tran
              ]
 
 VICTIM_SESSION = os.environ["VICTIM_SESSION"]  
-FLAG = os.environ.get("FLAG", "ATHACK{I_t0Ld_Y0U_n0t_T0_TrUsT_tH3_pR0xy}")
+FLAG = os.environ.get("FLAG", "ATHACKCTF{I_t0Ld_Y0U_n0t_T0_TrUsT_tH3_pR0xy}")
 
 
 def render_template_file(filename: str, **ctx) -> str:
