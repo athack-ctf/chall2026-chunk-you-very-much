@@ -1,7 +1,6 @@
 from mitmproxy import http
 from urllib.parse import urlsplit
 
-#allow these pages only
 ALLOWED_PATHS = {
     "/",          
     "/post/2",
@@ -13,8 +12,6 @@ ALLOWED_PREFIXES = (
     "/background.webp",
 )
 
-
-#test these, imp
 DANGEROUS_HEADERS = [
     "X-Original-URL",
     "X-Rewrite-URL",
