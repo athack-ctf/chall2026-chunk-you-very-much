@@ -77,3 +77,4 @@ curl -X GET "http://localhost:8002/post/2" \
 curl -X GET "http://localhost:8002/profile" \
     -H "Cookie: session=89bf520e29c9926597eb4669037b6f2e"
 ```
+> Just a note regarding the value of the cookie, it will be different in different runs since it is created at runtime, replace with your own when solving.
