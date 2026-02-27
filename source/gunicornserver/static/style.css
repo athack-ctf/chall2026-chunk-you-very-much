@@ -257,34 +257,25 @@ body{
 
 .sponsor-pill-hidden { visibility: hidden; }
 
-.sponsor-pill-fly{
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-
-  opacity: 0;
-  will-change: transform, opacity, box-shadow;
-}
-
-.sponsor-intro-blur{
+/* Replace the blur with a simple overlay */
+.sponsor-intro-blur {
   position: fixed;
   inset: 0;
   z-index: 9990;
   pointer-events: none;
   opacity: 0;
-
-  background: rgba(5, 8, 18, 0.18);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
+  background: rgba(5, 8, 18, 0.6); /* Darken instead of blur */
   transition: opacity 260ms ease;
+  will-change: opacity;
 }
 
+.sponsor-pill-fly {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform, opacity; /* Force hardware acceleration */
+  transform: translate3d(0,0,0); /* Layer isolation */
+}
 @media (prefers-reduced-motion: reduce){
   .sponsor-pill-hidden { visibility: visible; }
 }
