@@ -26,6 +26,19 @@
   const sctx = particleSprite.getContext("2d");
   if (!sctx) return;
 
+
+  const EFFECT_CONFIG = {
+    lengthMultiplier: 1.5,   // Increase for longer trails (multiplies life)
+    speedMultiplier: 1.2,    // Increase for faster/further fire (multiplies velocity)
+    spread: 42,              // Width of the trail cone
+    backSpeedMin: 70,        // Minimum base pushback speed
+    backSpeedMax: 145,        // Maximum base pushback speed
+
+    trailCount: 7,
+    trailDecay: 0.4
+  };
+
+
   (function buildParticleSprite() {
     const cx = 32, cy = 32, r = 28;
     const g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
@@ -108,7 +121,6 @@
   }
 
   function emitFire(logo) {
-    // OPTIMIZATION 3: Emission Throttling
     if (particles.length >= MAX_PARTICLES) return;
 
     const speed = Math.hypot(logo.vx, logo.vy) || 1;
@@ -120,34 +132,41 @@
 
     const count = (rand(2, 4) | 0);
     for (let i = 0; i < count; i++) {
-      const spread = rand(-0.65, 0.65);
-      const backSpeed = rand(70, 145);
-      const px = -uy;
-      const py = ux;
+        const spread = rand(-0.65, 0.65);
+        // Apply speed multiplier here
+        const backSpeed = rand(EFFECT_CONFIG.backSpeedMin, EFFECT_CONFIG.backSpeedMax) * EFFECT_CONFIG.speedMultiplier;
+        
+        const px = -uy;
+        const py = ux;
 
-      particles.push({
-        x: tailX + px * rand(-3, 3),
-        y: tailY + py * rand(-3, 3),
-        vx: -ux * backSpeed + px * spread * 42 + rand(-10, 10),
-        vy: -uy * backSpeed + py * spread * 42 + rand(-10, 10),
-        life: rand(0.20, 0.34),
-        maxLife: 0.34,
-        r: rand(4, 9),
-        heat: rand(0.65, 0.95)
-      });
+        // Apply length multiplier to life
+        const particleLife = rand(0.20, 0.34) * EFFECT_CONFIG.lengthMultiplier;
+
+        particles.push({
+            x: tailX + px * rand(-3, 3),
+            y: tailY + py * rand(-3, 3),
+            vx: -ux * backSpeed + px * spread * EFFECT_CONFIG.spread + rand(-10, 10),
+            vy: -uy * backSpeed + py * spread * EFFECT_CONFIG.spread + rand(-10, 10),
+            life: particleLife,
+            maxLife: particleLife, // Match maxLife to new life
+            r: rand(4, 9),
+            heat: rand(0.65, 0.95)
+        });
     }
 
+    // Secondary "spark" particles
     if (Math.random() < 0.45 && particles.length < MAX_PARTICLES) {
-      particles.push({
-        x: tailX,
-        y: tailY,
-        vx: -ux * rand(120, 190) + rand(-22, 22),
-        vy: -uy * rand(120, 190) + rand(-22, 22),
-        life: rand(0.14, 0.22),
-        maxLife: 0.22,
-        r: rand(1.5, 3.2),
-        heat: 1.0
-      });
+        const sparkLife = rand(0.14, 0.22) * EFFECT_CONFIG.lengthMultiplier;
+        particles.push({
+            x: tailX,
+            y: tailY,
+            vx: (-ux * rand(120, 190) + rand(-22, 22)) * EFFECT_CONFIG.speedMultiplier,
+            vy: (-uy * rand(120, 190) + rand(-22, 22)) * EFFECT_CONFIG.speedMultiplier,
+            life: sparkLife,
+            maxLife: sparkLife,
+            r: rand(1.5, 3.2),
+            heat: 1.0
+        });
     }
   }
 
@@ -163,7 +182,7 @@
       
       // Store current pos in trail
       L.trail.push({ x: L.x, y: L.y, rot: L.rot });
-      if (L.trail.length > 6) L.trail.shift(); // Keep only last 6 steps
+      if (L.trail.length > EFFECT_CONFIG.trailCount) L.trail.shift(); // Keep only last 6 steps
 
       L.x += L.vx * dt;
       L.y += L.vy * dt;
@@ -183,7 +202,7 @@
     // Draw the Motion Blur Trail (Ghosts)
     for (let i = 0; i < L.trail.length; i++) {
       const pos = L.trail[i];
-      const trailAlpha = (i / L.trail.length) * L.alpha * 0.3; // Fades out the further back it is
+      const trailAlpha = (i / L.trail.length) * L.alpha * EFFECT_CONFIG.trailDecay; // Fades out the further back it is
       
       ctx.save();
       ctx.translate(pos.x, pos.y);
