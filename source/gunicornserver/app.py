@@ -7,11 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 
 
-app = Flask(__name__, static_folder="styles", static_url_path="/styles")
+app = Flask(__name__, static_folder="static", static_url_path="/static")
 
-@app.get("/scripts/<path:filename>")
-def scripts(filename):
-    return send_from_directory(BASE_DIR / "scripts", filename)
+# @app.get("/scripts/<path:filename>")
+# def scripts(filename):
+#     return send_from_directory(BASE_DIR / "scripts", filename)
 
 
 COMMENTS = [{"post_id": 2, "author": "Groot", "text": "If you can read this transmission, you can post one yourself, I am Groot!"},

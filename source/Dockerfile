@@ -10,7 +10,7 @@ COPY gunicornserver/app.py /app/server/app.py
 
 COPY gunicornserver/templates /app/server/templates
 
-COPY gunicornserver/styles /app/server/styles
+COPY gunicornserver/static /app/server/static
 
 COPY mitmproxy/filter.py /app/filter.py
 

@@ -8,7 +8,7 @@ ALLOWED_PATHS = {
 }
 
 ALLOWED_PREFIXES = (
-    "/styles/",   
+    "/static/",   
     "/background.webp",
 )
 
