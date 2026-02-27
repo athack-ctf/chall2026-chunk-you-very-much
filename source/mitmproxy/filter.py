@@ -3,7 +3,7 @@ from urllib.parse import urlsplit
 
 ALLOWED_PATHS = {
     "/",          
-    "/post/2",
+    "/post/main",
     "/profile",
 }
 

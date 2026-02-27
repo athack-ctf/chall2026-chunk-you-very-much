@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, Response
+from flask import Flask, request, redirect, Response, send_from_directory
 from pathlib import Path
 from html import escape as html_escape
 import os
@@ -8,6 +8,10 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 
 
 app = Flask(__name__, static_folder="styles", static_url_path="/styles")
+
+@app.get("/scripts/<path:filename>")
+def scripts(filename):
+    return send_from_directory(BASE_DIR / "scripts", filename)
 
 
 COMMENTS = [{"post_id": 2, "author": "Groot", "text": "If you can read this transmission, you can post one yourself, I am Groot!"},
@@ -47,10 +51,10 @@ def read_local_file(name: str) -> str:
 
 @app.get("/")
 def root():
-    return redirect("/post/2")
+    return redirect("post/main")
 
 
-@app.get("/post/2")
+@app.get("/post/main")
 def post2():
     post_comments = [c for c in COMMENTS if c.get("post_id") == 2]
     cards = []
@@ -97,7 +101,7 @@ def post_comment():
 
     COMMENTS.append({"post_id": post_id, "author": name, "text": transmission})
     COMMENTS.append({"post_id": post_id, "author": "Groot", "text": "You smuggled a request! Here is your reward: session=" + VICTIM_SESSION})
-    return redirect("/post/2", code=302)
+    return redirect("/post/main", code=302)
 
 
 
