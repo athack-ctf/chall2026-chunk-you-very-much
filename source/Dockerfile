@@ -7,8 +7,11 @@ RUN pip3 install --no-cache-dir --upgrade \
     Werkzeug==2.2.3
 
 COPY gunicornserver/app.py /app/server/app.py
+
 COPY gunicornserver/templates /app/server/templates
+
 COPY gunicornserver/styles /app/server/styles
+
 COPY mitmproxy/filter.py /app/filter.py
 
 COPY entrypoint.sh /entrypoint.sh
