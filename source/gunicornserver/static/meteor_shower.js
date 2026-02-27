@@ -28,11 +28,11 @@
 
 
   const EFFECT_CONFIG = {
-    lengthMultiplier: 1.5,   // Increase for longer trails (multiplies life)
-    speedMultiplier: 1.2,    // Increase for faster/further fire (multiplies velocity)
-    spread: 42,              // Width of the trail cone
+    lengthMultiplier: 1.75,   // Increase for longer trails (multiplies life)
+    speedMultiplier: 1,    // Increase for faster/further fire (multiplies velocity)
+    spread: 60,              // Width of the trail cone
     backSpeedMin: 70,        // Minimum base pushback speed
-    backSpeedMax: 145,        // Maximum base pushback speed
+    backSpeedMax: 130,        // Maximum base pushback speed
 
     trailCount: 7,
     trailDecay: 0.4
@@ -107,10 +107,13 @@
     const x = fromLeft ? rand(-60, w * 0.32) : rand(w * 0.68, w + 60);
     const y = rand(-100, h * 0.18);
 
+    // added this variable to slow down each meteor
+    const METEOR_SPEED = 0.85;
+
     logos.push({
       x, y, 
-      vx: fromLeft ? rand(55, 110) : rand(-110, -55), 
-      vy: rand(230, 310),
+      vx: fromLeft ? rand(55, 110) : rand(-110, -55) * METEOR_SPEED, 
+      vy: rand(230, 310) * METEOR_SPEED,
       size: rand(30, 46),
       rot: rand(-0.35, 0.35),
       rotSpeed: rand(-0.18, 0.18),
@@ -130,7 +133,7 @@
     const tailX = logo.x - ux * (logo.size * 0.34);
     const tailY = logo.y - uy * (logo.size * 0.34);
 
-    const count = (rand(2, 4) | 0);
+    const count = (rand(2, 10) | 0);
     for (let i = 0; i < count; i++) {
         const spread = rand(-0.65, 0.65);
         // Apply speed multiplier here
