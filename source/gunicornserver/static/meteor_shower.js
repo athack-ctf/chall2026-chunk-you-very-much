@@ -93,15 +93,17 @@
     const fromLeft = Math.random() < 0.5;
     const x = fromLeft ? rand(-60, w * 0.32) : rand(w * 0.68, w + 60);
     const y = rand(-100, h * 0.18);
-    const vx = fromLeft ? rand(55, 110) : rand(-110, -55);
-    const vy = rand(230, 310);
 
     logos.push({
-      x, y, vx, vy,
+      x, y, 
+      vx: fromLeft ? rand(55, 110) : rand(-110, -55), 
+      vy: rand(230, 310),
       size: rand(30, 46),
       rot: rand(-0.35, 0.35),
       rotSpeed: rand(-0.18, 0.18),
-      alpha: rand(0.55, 0.80)
+      alpha: rand(0.55, 0.80),
+      // OPTIMIZATION: Store previous coordinates for the blur trail
+      trail: [] 
     });
   }
 
@@ -158,10 +160,15 @@
 
     for (let i = logos.length - 1; i >= 0; i--) {
       const L = logos[i];
+      
+      // Store current pos in trail
+      L.trail.push({ x: L.x, y: L.y, rot: L.rot });
+      if (L.trail.length > 6) L.trail.shift(); // Keep only last 6 steps
+
       L.x += L.vx * dt;
       L.y += L.vy * dt;
       L.rot += L.rotSpeed * dt;
-
+      
       emitFire(L);
 
       if (L.y > h + 120 || L.x < -140 || L.x > w + 140) {
@@ -171,28 +178,29 @@
   }
 
   function drawLogo(L) {
-    const glowSize = L.size * 2.1;
-    ctx.drawImage(glowSprite, L.x - glowSize / 2, L.y - glowSize / 2, glowSize, glowSize);
+    if (!logoImg.complete) return;
 
-    const speed = Math.hypot(L.vx, L.vy) || 1;
-    const ux = L.vx / speed;
-    const uy = L.vy / speed;
-
-    ctx.strokeStyle = "rgba(240,181,28,0.10)";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(L.x - ux * (L.size * 1.35), L.y - uy * (L.size * 1.35));
-    ctx.lineTo(L.x - ux * (L.size * 0.18), L.y - uy * (L.size * 0.18));
-    ctx.stroke();
-
-    if (logoImg.complete && logoImg.naturalWidth) {
+    // Draw the Motion Blur Trail (Ghosts)
+    for (let i = 0; i < L.trail.length; i++) {
+      const pos = L.trail[i];
+      const trailAlpha = (i / L.trail.length) * L.alpha * 0.3; // Fades out the further back it is
+      
       ctx.save();
-      ctx.translate(L.x, L.y);
-      ctx.rotate(L.rot);
-      ctx.globalAlpha = L.alpha * 0.78;
+      ctx.translate(pos.x, pos.y);
+      ctx.rotate(pos.rot);
+      ctx.globalAlpha = trailAlpha;
+      // Use the pre-rendered logoSprite for speed
       ctx.drawImage(logoSprite, -L.size, -L.size, L.size * 2, L.size * 2);
       ctx.restore();
     }
+
+    // Draw the Main Logo (The "Head")
+    ctx.save();
+    ctx.translate(L.x, L.y);
+    ctx.rotate(L.rot);
+    ctx.globalAlpha = L.alpha;
+    ctx.drawImage(logoSprite, -L.size, -L.size, L.size * 2, L.size * 2);
+    ctx.restore();
   }
 
   let last = performance.now();
