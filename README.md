@@ -36,40 +36,6 @@ The challenge is designed to test and reinforce the following skills:
 This challenge avoids obvious vulnerabilities and focuses on protocol-level thinking and
 experimentation.
 
-**IMPORTANT:** This description will **NOT** be shared with participants.
-
 ## Category(ies)
 
 - `web`
-
----
-
-# Project Structure
-
-## 1. HACKME.md
-
-- **[HACKME.md](HACKME.md)**: A description of the challenge to be shared with participants (in CTFd).
-
-## 2. Source Code
-
-- **[source/README.md](source/README.md)**: Comprehensive instructions on how to have a running instance of your
-  challenge from the source.
-- **[source/*](source/)**: Your source code.
-
-## 3. Offline Artifacts [OPTIONAL]
-
-## 4. Solution
-
-- **[solution/README.md](solution/README.md)**: A detailed writeup of the working solution.
-- **[solution/FLAGS.md](solution/FLAGS.md)**: A single markdown file listing all (up-to-date) flags.
-- **[solution/*](solution/)**: Any additional files or code necessary for constructing a reproducible solution for the
-  challenge.
-
-## 5. Dockerization
-
-> **NOTE:** For deployment on @Hack's infrastructure, online challenges must be containerized. However, this requirement
-> does not apply during the early stages of challenge development, so do not hesitate to start building your online
-> challenge if you are unfamiliar with containerization. We (Anis and Hugo) will take care of it.
-
-- **[source/Dockerfile](source/Dockerfile)**
-  challenge.
