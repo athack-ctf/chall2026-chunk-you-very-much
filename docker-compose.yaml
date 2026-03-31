@@ -1,0 +1,11 @@
+name: chall2026-chunk-you-very-much
+
+services:
+  chunk-you-very-much:
+    image: athack-ctf/chall2026-chunk-you-very-much:latest
+    container_name: chall2026-chunk-you-very-much
+    build:
+      context: .
+      dockerfile: source/Dockerfile
+    ports:
+      - "53003:8002"

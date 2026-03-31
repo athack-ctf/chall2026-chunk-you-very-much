@@ -1,41 +1,85 @@
-# @HACK 2026: Chunk You Very Much
+# @Hack 2026: Chunk You Very Much
 
-> A deliberately vulnerable web challenge that explores HTTP parsing mismatches and trust boundaries between frontend and backend servers. This challenge depends on HTTP request smuggling.
+> Authored by [Tarek](https://github.com/tarek503).
 
-## Challenge Type
+- **Category**: `Web`
+- **Solves**: `17/120`
+- **Tags**: `sponsored`
+- **Protocol**: `http`
 
-- [ ] **OFF**line
-- [X] **ON**line
+> At @HACK 2026, the organizers hired **Groot** as the new guardian for the transmission relay station, where ***only***
+> space pirates can exchange information.
+>
+> He stands at the *gateway*, checks every request, and proudly blocks anything that looks "wrong". Meanwhile, the
+> backend behind him is actually doing real work… it doesn't always interpret requests the same way Groot does.
+>
+> Your objective is simple: Somewhere behind the "I am Groot" filter is a protected action (a *transmission*) that
+> should not be reachable directly, reach it and recover the flag.
+>
+> > Hint: The frontend and backend may disagree on **where one request ends and the next begins**.
+>
 
-## Design Type
+## Access a dockerized instance
 
-- [X] **Black**-Box
-- [ ] **White**-Box
+Run challenge container using docker compose
 
-## Designer(s)
+```
+docker compose up -d
+```
 
-- Tarek Hamze
+Open below URL on your browser
 
-## Description
+```
+http://localhost:53003/
+```
 
-This challenge is based on **HTTP request smuggling**, which is a technique for interfering with the way a web site processes sequences of HTTP requests that are received from one or more users. In modern websites, it is crucial that the front-end and back-end systems agree about the boundaries between requests. Otherwise, an attacker might be able to send an ambiguous request that gets interpreted differently by the front-end and back-end systems.
+<details>
+<summary>
+How to stop/restart challenge?
+</summary>
 
-In the challenge participants interact with a web application that appears to enforce strict routing and access controls, yet hides a protected endpoint that cannot be accessed through straightforward means such as a regular POST request.
+To stop the challenge run
 
-The core idea is to expose participants to **request desynchronization / request smuggling** flaws, where HTTP messages are interpreted differently depending on which component (FE/BE) processes them. By carefully crafting requests that exploit ambiguities in request boundaries (HTTP headers namely *Transfer-Encoding* and *Content-Length*), participants can cause the backend to process unintended input.
+```
+docker compose stop
+```
 
-### Educational goals
+To restart the challenge run
 
-The challenge is designed to test and reinforce the following skills:
+```
+docker compose restart
+```
 
-- Understanding of **HTTP/1.1 request structure**
-- Awareness of **frontend vs backend trust assumptions**
-- Ability to identify and exploit **request desynchronization**
-- Manual request crafting using tools such as Burp Repeater or curl
+</details>
 
-This challenge avoids obvious vulnerabilities and focuses on protocol-level thinking and
-experimentation.
+## Reveal Flag(s)
 
-## Category(ies)
+Did you try solving this challenge?
+<details>
+<summary>
+Yes
+</summary>
 
-- `web`
+Did you **REALLY** try solving this challenge?
+
+<details>
+<summary>
+Yes, I promise!
+</summary>
+
+- Flag 1: `ATHACKCTF{I_t0Ld_Y0U_n0t_T0_TrUsT_tH3_pR0xy}`
+
+</details>
+</details>
+
+
+---
+
+## About @Hack
+
+[@Hack](https://athackctf.com/) is an annual CTF (Capture The Flag) competition hosted
+by [HEXPLOIT ALLIANCE](https://hexploit-alliance.com/) and [TECHNATION](https://technationcanada.ca/) at Concordia
+University in Montreal, Canada.
+
+---
+[Check more challenges from @Hack 2026](https://github.com/athack-ctf/AtHackCTF-2026-Challenges).
